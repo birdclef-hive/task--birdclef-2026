@@ -121,7 +121,7 @@ class BirdCLEFDataset(Dataset):
         """Build multilabel target vector from primary + secondary labels."""
         target = torch.zeros(self.num_classes, dtype=torch.float32)
 
-        primary = row.get("primary_label", "")
+        primary = str(row.get("primary_label", ""))
         if primary in self.species_to_idx:
             target[self.species_to_idx[primary]] = 1.0
 

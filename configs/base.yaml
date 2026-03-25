@@ -24,12 +24,12 @@ training:
   warmup_epochs: 0
   mixed_precision: false
   n_folds: 5
-  stratify_by: primary_species
-  group_by: recordist
+  stratify_by: primary_label
+  group_by: author
 
 model:
   backbone: tf_efficientnet_b0_ns
-  num_classes: 650
+  num_classes: 234
   pretrained: true
   hidden_dim: 512
   dropout_backbone: 0.25

@@ -175,7 +175,7 @@ def create_folds(
     metadata: pd.DataFrame,
     n_folds: int = 5,
     stratify_by: str = "primary_label",
-    group_by: str | None = "recordist",
+    group_by: str | None = "author",
 ) -> pd.DataFrame:
     """Create stratified K-fold splits with optional group constraint.
 
@@ -286,8 +286,9 @@ def main() -> None:
     parser.add_argument("--config", type=str, required=True, help="Path to base config YAML")
     parser.add_argument("--override", type=str, nargs="*", help="Additional config files to merge")
     parser.add_argument("--fold", type=str, default="0", help="Fold number or 'all'")
-    parser.add_argument("--data-dir", type=str, default="data/raw", help="Audio directory")
-    parser.add_argument("--metadata", type=str, default="data/raw/train_metadata.csv", help="Metadata CSV")
+    parser.add_argument("--data-dir", type=str, default="data/raw/train_audio", help="Audio directory")
+    parser.add_argument("--metadata", type=str, default="data/raw/train.csv", help="Metadata CSV")
+    parser.add_argument("--taxonomy", type=str, default="data/raw/taxonomy.csv", help="Taxonomy CSV (defines full species list)")
     parser.add_argument("--output-dir", type=str, default="models", help="Output directory for checkpoints")
     args = parser.parse_args()
 
@@ -306,10 +307,19 @@ def main() -> None:
         return
 
     metadata = pd.read_csv(metadata_path)
+    # Ensure primary_label is string (some are numeric taxon IDs)
+    metadata["primary_label"] = metadata["primary_label"].astype(str)
     logger.info("Loaded metadata: %d rows", len(metadata))
 
-    # Build species list from metadata
-    species_list = sorted(metadata["primary_label"].unique().tolist())
+    # Build species list from taxonomy (includes species with 0 training samples)
+    taxonomy_path = Path(args.taxonomy)
+    if taxonomy_path.exists():
+        taxonomy = pd.read_csv(taxonomy_path)
+        species_list = sorted(taxonomy["primary_label"].astype(str).unique().tolist())
+        logger.info("Species list from taxonomy: %d", len(species_list))
+    else:
+        species_list = sorted(metadata["primary_label"].astype(str).unique().tolist())
+        logger.info("Species list from train metadata: %d", len(species_list))
     num_classes = len(species_list)
     logger.info("Species: %d", num_classes)
 
