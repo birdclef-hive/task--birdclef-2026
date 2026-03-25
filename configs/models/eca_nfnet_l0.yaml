@@ -1,0 +1,10 @@
+model:
+  backbone: eca_nfnet_l0
+  pretrained: true
+  hidden_dim: 512
+  dropout_backbone: 0.25
+  dropout_head: 0.5
+
+training:
+  optimizer: radam
+  learning_rate: 1.0e-3

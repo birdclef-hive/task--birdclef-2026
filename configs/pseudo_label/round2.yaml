@@ -1,0 +1,7 @@
+pseudo_labeling:
+  round: 2
+  confidence_threshold: 0.5
+  min_prob_threshold: 0.1
+  power_scale: 0.7
+  replacement_prob: 0.4
+  use_soft_targets: true

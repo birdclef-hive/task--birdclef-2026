@@ -1,0 +1,6 @@
+model:
+  backbone: tf_efficientnet_b3_ns
+  pretrained: true
+  hidden_dim: 512
+  dropout_backbone: 0.25
+  dropout_head: 0.5

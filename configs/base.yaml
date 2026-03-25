@@ -1,0 +1,73 @@
+data:
+  sample_rate: 32000
+  duration: 5.0
+  n_mels: 128
+  n_fft: 2048
+  hop_length: 512
+  f_min: 20
+  f_max: 16000
+  top_db: 80
+  num_workers: 4
+  use_silero_vad: true
+  max_duration_per_sample: 30
+  rare_class_duration: 60
+  min_samples_upsample: 20
+
+training:
+  epochs: 50
+  batch_size: 64
+  optimizer: adamw
+  learning_rate: 1.0e-4
+  weight_decay: 0.01
+  scheduler: cosine
+  min_lr: 1.0e-6
+  warmup_epochs: 0
+  mixed_precision: false
+  n_folds: 5
+  stratify_by: primary_species
+  group_by: recordist
+
+model:
+  backbone: tf_efficientnet_b0_ns
+  num_classes: 650
+  pretrained: true
+  hidden_dim: 512
+  dropout_backbone: 0.25
+  dropout_head: 0.5
+
+loss:
+  type: focal_bce
+  label_smoothing: 0.05
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+
+augmentations:
+  mixup_prob: 0.5
+  mixup_alpha: 0.4
+  mixup_target: max
+  background_mix_prob: 0.5
+  spec_augment: true
+  time_mask_param: 30
+  freq_mask_param: 10
+  num_time_masks: 2
+  num_freq_masks: 2
+  random_filtering: true
+  stochastic_depth: 0.2
+
+pseudo_labeling:
+  num_rounds: 3
+  confidence_threshold: 0.5
+  min_prob_threshold: 0.1
+  power_scale: 0.7
+  replacement_prob: 0.4
+  use_soft_targets: true
+
+postprocessing:
+  method: topn
+  n: 1
+  apply_at: ensemble
+
+inference:
+  format: openvino
+  batch_size: 32
+  time_budget_minutes: 85

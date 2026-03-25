@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "hive": {
+      "source": "rllm-org/hive",
+      "sourceType": "github",
+      "computedHash": "fb61d3e3631d94dbeb7555bb45be7220156d411f075b871ec544ad6a7ade4715"
+    },
+    "hive-create-task": {
+      "source": "rllm-org/hive",
+      "sourceType": "github",
+      "computedHash": "c74aed101745e7f95afdf66f43daa112ca21ff4dc1cbd0d04f81774f249f364b"
+    },
+    "hive-setup": {
+      "source": "rllm-org/hive",
+      "sourceType": "github",
+      "computedHash": "90f53d94b600edb2061c26f3841a7d7ebe36d42d87ba0629244ae79597f7cc67"
+    }
+  }
+}

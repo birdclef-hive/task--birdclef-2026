@@ -1,0 +1,12 @@
+augmentations:
+  mixup_prob: 0.7
+  mixup_alpha: 0.4
+  mixup_target: max
+  background_mix_prob: 0.7
+  spec_augment: true
+  time_mask_param: 40
+  freq_mask_param: 15
+  num_time_masks: 3
+  num_freq_masks: 3
+  random_filtering: true
+  stochastic_depth: 0.3

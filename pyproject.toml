@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "birdclef-2026-hive"
+version = "0.1.0"
+description = "BirdCLEF+ 2026 — Automated ML experimentation for Pantanal wildlife audio classification"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0",
+    "torchaudio>=2.0",
+    "timm>=0.9",
+    "pytorch-lightning>=2.0",
+    "nnAudio>=0.3",
+    "openvino>=2024.0",
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "h5py>=3.9",
+    "librosa>=0.10",
+    "soundfile>=0.12",
+    "silero-vad>=4.0",
+    "pyyaml>=6.0",
+    "hive-evolve",
+]
+
+[project.scripts]
+train = "src.train:main"
+inference = "src.inference:main"
+export = "src.export_openvino:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
